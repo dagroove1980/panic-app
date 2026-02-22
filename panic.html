@@ -106,14 +106,6 @@
       margin-bottom: 1rem;
     }
 
-    .technique-content h2 {
-      margin-bottom: 0.75rem;
-    }
-
-    .technique-content .view-desc {
-      margin-bottom: 1.25rem;
-    }
-
     .subtitle {
       text-align: center;
       color: var(--text-muted);
@@ -122,57 +114,89 @@
       font-weight: 300;
     }
 
-    /* Glassmorphic Card - fixed height, content scrolls */
+    /* Glassmorphic Card - fixed height, content fits (no scroll) */
     .technique-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem 1.25rem;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      max-height: min(600px, 75dvh);
-      min-height: 280px;
+      max-height: min(520px, 72dvh);
+      min-height: 260px;
     }
 
     .technique-content {
       flex: 1 1 auto;
-      min-height: 0;
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      -webkit-overflow-scrolling: touch;
-      padding-right: 0.25rem;
+      min-height: 0;
     }
 
     .technique-card .actions {
       flex-shrink: 0;
-      margin-top: 1.5rem;
-      padding-top: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
     }
 
     .view-desc {
       color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
     }
 
-    /* Standard Step Text */
+    .technique-content h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Standard Step Text - one step at a time, compact */
     .steps {
       width: 100%;
+      margin: 0.5rem 0;
     }
 
-    .step-line {
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
+    .step-current {
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      line-height: 1.6;
       color: var(--text-main);
+      white-space: pre-line;
       opacity: 0;
-      animation: fadeIn 1s ease forwards;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .step-nav {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-step {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      border: 1px solid var(--glass-border);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+    }
+
+    .btn-step:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
     @keyframes fadeIn {
@@ -305,7 +329,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
 
     /* 1. Breathing Visualizer */
@@ -343,7 +367,7 @@
       position: relative;
       z-index: 2;
       font-family: 'Outfit', sans-serif;
-      font-size: 1.8rem;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
       font-weight: 300;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -390,9 +414,9 @@
 
     .voice-output {
       width: 100%;
-      min-height: 120px;
+      min-height: 80px;
       font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
       line-height: 1.4;
       color: var(--text-main);
       margin-bottom: 2rem;
@@ -438,7 +462,7 @@
     /* 3. EMDR Bilateral Stimulation */
     .emdr-container {
       width: 100%;
-      height: 100px;
+      height: 80px;
       position: relative;
       margin-bottom: 2rem;
       display: none;
@@ -629,21 +653,21 @@
       { type: "breathing", title: "Box Breathing", desc: "Follow the circle. Keep your eyes gently focused on it.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 4000 }, { action: "Breathe Out", time: 4000 }, { action: "Hold", time: 4000 }], steps: "" },
       { type: "breathing", title: "4-7-8 Breath", desc: "Follow the circle. Keep your eyes gently focused on it.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 7000 }, { action: "Breathe Out", time: 8000 }], steps: "" },
       { type: "standard", title: "Slow Exhale", desc: "Activate your body's rest response.", steps: "Breathe in normally.\nNow breathe out slowly — make it twice as long as the inhale.\n\nDo this 6 times.\nSlow exhales activate your body's rest response." },
-      { type: "standard", title: "5-4-3-2-1 Grounding", desc: "Scan your environment carefully.", steps: "Name 5 things you can see.\nName 4 things you can physically feel.\nName 3 things you can hear.\nName 2 things you can smell.\nName 1 thing you can taste.\n\nTake your time with each one." },
-      { type: "standard", title: "Feet on the Floor", desc: "Reconnect with gravity.", steps: "Press both feet flat on the floor.\nFeel the ground under you.\nNotice the texture, the temperature, the pressure.\n\nYou are here. You are supported.\nStay with this feeling for 30 seconds." },
-      { type: "standard", title: "Hold Something Cold", desc: "Focus entirely on a single sensation.", steps: "Find something cold — ice, a cold drink, cold water.\nHold it in your hands.\nFocus entirely on the sensation.\n\nThe cold brings you back to the present moment.\nStay with it until your breathing slows." },
-      { type: "standard", title: "Body Scan", desc: "Bring awareness back to your body.", steps: "Start at the top of your head.\nSlowly move your attention down through your body.\n\nNotice: forehead, jaw, shoulders, chest, stomach, hands, legs, feet.\n\nAt each part: notice the sensation. Don't try to change it." },
-      { type: "standard", title: "Name What You See", desc: "Engage the logical part of your brain.", steps: "Look around and silently name 10 objects you can see.\n\nBe specific: not 'chair' but 'wooden chair with blue cushion'.\n\nThis pulls your brain out of panic and into the present." },
+      { type: "standard", title: "5-4-3-2-1 Grounding", desc: "Scan your environment.", steps: "Name 5 things you can see.\n\nName 4 things you can feel.\n\nName 3 things you can hear.\n\nName 2 things you can smell.\n\nName 1 thing you can taste." },
+      { type: "standard", title: "Feet on the Floor", desc: "Reconnect with gravity.", steps: "Press both feet flat on the floor. Feel the ground. Notice texture, temperature, pressure.\n\nYou are here. You are supported." },
+      { type: "standard", title: "Hold Something Cold", desc: "Focus on one sensation.", steps: "Find something cold — ice, cold drink, cold water.\n\nHold it. Focus entirely on the sensation.\n\nThe cold brings you back to now." },
+      { type: "standard", title: "Body Scan", desc: "Bring awareness to your body.", steps: "Start at the top of your head. Move your attention slowly down: forehead, jaw, shoulders, chest, stomach, hands, legs, feet.\n\nNotice each part. Don't try to change it." },
+      { type: "standard", title: "Name What You See", desc: "Engage the logical part of your brain.", steps: "Silently name 10 objects you can see.\n\nBe specific: 'wooden chair with blue cushion'.\n\nThis pulls your brain into the present." },
       { type: "standard", title: "Clench and Release", desc: "Release physical tension.", steps: "Make tight fists with both hands.\nHold for 5 seconds.\nRelease completely.\n\nNow tense your shoulders up to your ears.\nHold for 5 seconds.\nRelease.\n\nRepeat 3 times. Feel the difference." },
       { type: "standard", title: "Splash Cold Water", desc: "Trigger the mammalian dive reflex.", steps: "Go to a sink.\nSplash cold water on your face — especially your forehead and cheeks.\n\nThis triggers the dive reflex and slows your heart rate.\nPat your face dry slowly." },
-      { type: "standard", title: "Run in Place", desc: "Burn off the adrenaline.", steps: "Run in place for 30 seconds.\nLet your body burn off the adrenaline.\n\nPanic primes your body to fight or flee.\nGive it somewhere to go.\n\nStop. Breathe. Notice how you feel." },
-      { type: "standard", title: "Shake It Out", desc: "Release nervous energy.", steps: "Stand up if you can.\nShake your hands like you're flicking water off them.\nThen shake your arms. Your legs. Your whole body.\n\n30 seconds of shaking.\nAnimals do this after stress. It works." },
-      { type: "standard", title: "This Will Pass", desc: "A reminder of impermanence.", steps: "A panic attack cannot last forever.\nYour body cannot sustain this level of arousal.\n\nThe average panic attack peaks in 10 minutes.\nYou have survived every single one before this.\n\nThis one will pass too." },
-      { type: "standard", title: "Panic Is Not Danger", desc: "Reframe the physical sensations.", steps: "Panic feels like danger. It is not danger.\n\nYour heart is beating fast: that's adrenaline, not a heart attack.\nYou feel lightheaded: that's shallow breathing, not dying.\n\nThe alarm is loud. The alarm is wrong.\nYou are safe." },
-      { type: "standard", title: "Name 3 True Facts", desc: "Anchor yourself with undeniable truths.", steps: "Say three things that are true right now.\n\nFor example:\n'I am sitting in my living room.'\n'It is Tuesday afternoon.'\n'I can hear cars outside.'\n\nFacts are an anchor. Use them." },
-      { type: "standard", title: "What Would You Tell a Friend?", desc: "Practice self-compassion.", steps: "If your best friend was feeling exactly what you're feeling right now, what would you say to them?\n\nSay it to yourself.\nOut loud if you can.\n\nYou deserve the same compassion you'd give them." },
+      { type: "standard", title: "Run in Place", desc: "Burn off the adrenaline.", steps: "Run in place for 30 seconds.\n\nLet your body burn it off. Stop. Breathe. Notice how you feel." },
+      { type: "standard", title: "Shake It Out", desc: "Release nervous energy.", steps: "Stand up. Shake your hands, arms, legs — your whole body.\n\n30 seconds. Animals do this after stress. It works." },
+      { type: "standard", title: "This Will Pass", desc: "A reminder.", steps: "A panic attack cannot last forever.\n\nIt usually peaks in 10 minutes. You've survived every one before. This one will pass too." },
+      { type: "standard", title: "Panic Is Not Danger", desc: "Reframe the sensations.", steps: "Panic feels like danger. It is not.\n\nFast heart = adrenaline, not a heart attack. Lightheaded = shallow breathing, not dying.\n\nThe alarm is loud. The alarm is wrong.\nYou are safe." },
+      { type: "standard", title: "Name 3 True Facts", desc: "Anchor with truth.", steps: "Say 3 things true right now.\n\n'I am in my living room.'\n'It is Tuesday.'\n'I hear cars outside.'\n\nFacts are an anchor." },
+      { type: "standard", title: "What Would You Tell a Friend?", desc: "Practice self-compassion.", steps: "What would you say to a friend feeling this way?\n\nSay it to yourself. Out loud if you can.\n\nYou deserve the same compassion." },
       { type: "standard", title: "You Have Done This Before", desc: "Draw on your past resilience.", steps: "Every panic attack you've ever had has ended.\n\nEvery single one.\n\nYou are still here.\nYou are stronger than this feeling.\n\nThis one ends too." },
-      { type: "standard", title: "You Are Allowed to Slow Down", desc: "Give yourself permission to pause.", steps: "You don't have to keep going right now.\n\nYou are allowed to stop.\nYou are allowed to rest.\nYou are allowed to take up space.\n\nSlow down.\nYou have permission." },
+      { type: "standard", title: "You Are Allowed to Slow Down", desc: "Permission to pause.", steps: "You don't have to keep going.\n\nYou're allowed to stop. To rest. To take up space.\n\nSlow down. You have permission." },
       { type: "standard", title: "Soften Something", desc: "Release a tiny bit of resistance.", steps: "Notice where you're holding tension in your body.\nYour jaw? Your shoulders? Your hands?\n\nJust soften it slightly. You don't have to let go completely.\nJust a little softer.\n\nAnd breathe." },
       { type: "standard", title: "One Thing at a Time", desc: "Narrow your focus to right now.", steps: "You don't have to solve everything right now.\n\nYou only have to do one thing:\nGet through the next minute.\n\nThat's it.\nJust the next minute.\nYou can do that." }
     ];
@@ -665,16 +689,52 @@
       if (t.type === 'breathing') setTimeout(() => runBreathingCycle(t.pattern), 600);
       else if (t.type === 'voice') initVoiceTechnique();
       else if (t.type === 'emdr') initEMDRTechnique();
-      else {
-        const stepsContainer = document.getElementById('technique-steps'); stepsContainer.innerHTML = '';
-        const lines = t.steps.split('\n').filter(l => l.trim() !== '');
-        lines.forEach((line, i) => { const p = document.createElement('div'); p.className = 'step-line'; p.textContent = line; p.style.animationDelay = `${i * 0.15 + 0.3}s`; stepsContainer.appendChild(p); });
-      }
+      else initStepCarousel(t.steps);
       switchView('view-technique');
     }
 
     function cleanupCurrentTechnique() { stopBreathingAnimation(); stopVoiceRecognition(); stopEMDR(); }
     function switchView(viewId) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById(viewId).classList.add('active'); }
+
+    function initStepCarousel(stepsStr) {
+      const chunks = stepsStr.split(/\n\n+/).map(s => s.trim()).filter(Boolean);
+      if (chunks.length === 0) chunks.push(stepsStr);
+      let stepIndex = 0;
+      const container = document.getElementById('technique-steps');
+      const currentEl = document.createElement('div');
+      currentEl.className = 'step-current';
+      const navEl = document.createElement('div');
+      navEl.className = 'step-nav';
+      const btn = document.createElement('button');
+      btn.className = 'btn-step';
+      btn.textContent = chunks.length > 1 ? 'Next step' : '';
+      const counter = document.createElement('span');
+      counter.className = 'step-counter';
+      function render() {
+        currentEl.textContent = chunks[stepIndex];
+        currentEl.style.animation = 'none';
+        void currentEl.offsetWidth;
+        currentEl.style.animation = '';
+        if (chunks.length > 1) {
+          counter.textContent = `${stepIndex + 1} of ${chunks.length}`;
+          btn.textContent = stepIndex === chunks.length - 1 ? 'Done' : 'Next step';
+        }
+      }
+      btn.addEventListener('click', () => {
+        if (stepIndex < chunks.length - 1) {
+          stepIndex++;
+          render();
+        }
+      });
+      container.innerHTML = '';
+      container.appendChild(currentEl);
+      if (chunks.length > 1) {
+        navEl.appendChild(btn);
+        navEl.appendChild(counter);
+        container.appendChild(navEl);
+      }
+      render();
+    }
 
     // MODULES 
     let currentBreathTimer = null;
