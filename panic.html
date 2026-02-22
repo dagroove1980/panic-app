@@ -58,7 +58,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 1.5rem;
+      padding: 1rem 1.5rem;
     }
 
     /* Views */
@@ -135,7 +135,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      max-height: min(600px, 75dvh);
+      max-height: min(780px, 82dvh);
       min-height: 280px;
     }
 
@@ -150,8 +150,8 @@
 
     .technique-card .actions {
       flex-shrink: 0;
-      margin-top: 1.5rem;
-      padding-top: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
     }
 
     .view-desc {
@@ -317,6 +317,7 @@
       /* default hidden */
       align-items: center;
       justify-content: center;
+      margin: 0 auto;
     }
 
     .breath-circle {
@@ -493,8 +494,36 @@
       display: none;
     }
 
-    /* Mobile compactness */
-    @media (max-height: 700px) {
+    /* Top logo mark */
+    .top-mark {
+      text-align: center;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeIn 1.5s ease 0.3s forwards;
+    }
+
+    .top-mark span {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .top-mark .accent-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      box-shadow: 0 0 8px var(--brand-accent-glow);
+    }
+
+    /* Mobile compactness — only kick in on truly small screens */
+    @media (max-height: 640px) {
       .technique-card {
         padding: 1.25rem 1.25rem;
       }
@@ -505,20 +534,20 @@
       }
 
       .technique-content .view-desc {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         line-height: 1.4;
         margin-bottom: 0.75rem;
       }
 
       .step-line {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         line-height: 1.5;
         margin-bottom: 0.5rem;
       }
 
       .breath-container {
-        width: min(150px, 40vw);
-        height: min(150px, 40vw);
+        width: min(160px, 40vw);
+        height: min(160px, 40vw);
       }
 
       .breath-text {
@@ -526,13 +555,13 @@
       }
 
       .emdr-container {
-        height: 70px;
+        height: 80px;
         margin-bottom: 1rem;
       }
 
       .voice-output {
         min-height: 80px;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin-bottom: 1rem;
       }
 
@@ -544,36 +573,48 @@
       .technique-ui {
         margin: 1rem 0;
       }
+
+      .top-mark {
+        margin-bottom: 0.5rem;
+      }
+
+      .top-mark span {
+        font-size: 0.85rem;
+      }
     }
 
-    @media (max-height: 580px) {
+    @media (max-height: 500px) {
       .technique-card {
         padding: 1rem 1rem;
       }
 
       .technique-content h2 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         margin-bottom: 0.3rem;
       }
 
       .technique-content .view-desc {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         margin-bottom: 0.5rem;
       }
 
       .step-line {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         line-height: 1.4;
         margin-bottom: 0.35rem;
       }
 
       .breath-container {
-        width: min(120px, 35vw);
-        height: min(120px, 35vw);
+        width: min(130px, 35vw);
+        height: min(130px, 35vw);
       }
 
       .breath-text {
         font-size: 1.1rem;
+      }
+
+      .top-mark {
+        margin-bottom: 0.35rem;
       }
     }
 
@@ -702,6 +743,7 @@
     </div>
 
     <div id="view-technique" class="view">
+      <div class="top-mark"><span><span class="accent-dot"></span>You're Safe</span></div>
       <div class="technique-card" id="main-card">
         <div class="technique-content">
           <h2 id="technique-title">Technique</h2>
@@ -718,7 +760,7 @@
             <div class="voice-output" id="voice-output">
               Speak your thoughts aloud. Let them out.
             </div>
-            <div style="display:flex; gap:1rem;">
+            <div style="display:flex; gap:1rem; justify-content:center;">
               <button id="record-btn" class="btn-icon">
                 <svg viewBox="0 0 24 24">
                   <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
