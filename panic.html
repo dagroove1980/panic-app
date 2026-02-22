@@ -106,6 +106,14 @@
       margin-bottom: 1rem;
     }
 
+    .technique-content h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .technique-content .view-desc {
+      margin-bottom: 1.25rem;
+    }
+
     .subtitle {
       text-align: center;
       color: var(--text-muted);
@@ -114,68 +122,57 @@
       font-weight: 300;
     }
 
-    /* Glassmorphic Card - fixed height, content fits (no scroll) */
+    /* Glassmorphic Card - fixed height, content scrolls */
     .technique-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
-      padding: 1.5rem 1.25rem;
+      padding: 2rem 1.5rem;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      max-height: min(520px, 72dvh);
-      min-height: 260px;
+      max-height: min(600px, 75dvh);
+      min-height: 280px;
     }
 
     .technique-content {
       flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
       min-height: 0;
+      overflow-y: auto;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 0.25rem;
     }
 
     .technique-card .actions {
       flex-shrink: 0;
-      margin-top: 1rem;
-      padding-top: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .technique-card .actions .btn-secondary {
-      margin-bottom: 0;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
     }
 
     .view-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
     }
 
-    .technique-content h2 {
-      margin-bottom: 0.5rem;
-    }
-
+    /* Standard Step Text */
     .steps {
       width: 100%;
-      margin: 0.5rem 0;
     }
 
-    .step-text {
-      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
-      line-height: 1.55;
+    .step-line {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
       color: var(--text-main);
-      white-space: pre-line;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -243,15 +240,16 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 0.8rem;
-      text-decoration: none;
-      padding: 0.35rem;
-      opacity: 0.8;
+      font-size: 0.9rem;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 4px;
+      padding: 0.5rem;
     }
 
     .btn-link:hover {
       color: var(--text-main);
-      opacity: 1;
+      text-decoration-color: var(--glass-border);
     }
 
     .btn-icon {
@@ -307,7 +305,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin: 1rem 0;
+      margin: 2rem 0;
     }
 
     /* 1. Breathing Visualizer */
@@ -345,7 +343,7 @@
       position: relative;
       z-index: 2;
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-size: 1.8rem;
       font-weight: 300;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -392,9 +390,9 @@
 
     .voice-output {
       width: 100%;
-      min-height: 80px;
+      min-height: 120px;
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      font-size: 1.5rem;
       line-height: 1.4;
       color: var(--text-main);
       margin-bottom: 2rem;
@@ -440,7 +438,7 @@
     /* 3. EMDR Bilateral Stimulation */
     .emdr-container {
       width: 100%;
-      height: 80px;
+      height: 100px;
       position: relative;
       margin-bottom: 2rem;
       display: none;
@@ -554,8 +552,8 @@
         </div>
 
         <div class="actions">
-          <button id="next-btn" class="btn-secondary">Another</button>
-          <button id="back-link" class="btn-link">I'm okay</button>
+          <button id="next-btn" class="btn-secondary">Try something else</button>
+          <button id="back-link" class="btn-link">I feel better (Start over)</button>
         </div>
       </div>
     </div>
@@ -626,28 +624,28 @@
 
     // --- 2. TECHNIQUES DATA ---
     const techniques = [
-      { type: "emdr", title: "Bilateral Eye Sweep", desc: "Follow the light. Head still.", steps: "" },
-      { type: "voice", title: "Dissolving Thoughts", desc: "Speak it out. Watch it go.", steps: "" },
-      { type: "breathing", title: "Box Breathing", desc: "Follow the circle.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 4000 }, { action: "Breathe Out", time: 4000 }, { action: "Hold", time: 4000 }], steps: "" },
-      { type: "breathing", title: "4-7-8 Breath", desc: "Follow the circle.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 7000 }, { action: "Breathe Out", time: 8000 }], steps: "" },
-      { type: "standard", title: "Slow Exhale", desc: "Out twice as long as in. Six times.", steps: "" },
-      { type: "standard", title: "5-4-3-2-1", desc: "", steps: "5 things you see. 4 you feel. 3 you hear. 2 you smell. 1 you taste." },
-      { type: "standard", title: "Feet on the Floor", desc: "", steps: "Press your feet down. Feel the ground. You're here." },
-      { type: "standard", title: "Hold Something Cold", desc: "", steps: "Ice, cold water, cold drink. Hold it. Focus on the sensation." },
-      { type: "standard", title: "Body Scan", desc: "", steps: "Head to feet. Notice each part. Don't change it." },
-      { type: "standard", title: "Name What You See", desc: "", steps: "Name 10 objects. Be specific. It pulls you into now." },
-      { type: "standard", title: "Clench and Release", desc: "", steps: "Fists tight, 5 seconds. Release. Shoulders up, 5 seconds. Release. Three times." },
-      { type: "standard", title: "Splash Cold Water", desc: "", steps: "Cold water on your face. Forehead, cheeks. Slows your heart." },
-      { type: "standard", title: "Run in Place", desc: "", steps: "30 seconds. Burn it off. Then stop. Breathe." },
-      { type: "standard", title: "Shake It Out", desc: "", steps: "Shake hands, arms, legs. 30 seconds. It works." },
-      { type: "standard", title: "This Will Pass", desc: "", steps: "Peaks in 10 minutes. You've survived every one. This one too." },
-      { type: "standard", title: "Panic Is Not Danger", desc: "", steps: "Fast heart = adrenaline. Lightheaded = breathing. The alarm is wrong. You're safe." },
-      { type: "standard", title: "Name 3 True Facts", desc: "", steps: "Three things true right now. 'I'm here.' 'It's Tuesday.' Facts are an anchor." },
-      { type: "standard", title: "What Would You Tell a Friend?", desc: "", steps: "Say it to yourself. Out loud. You deserve the same." },
-      { type: "standard", title: "You Have Done This Before", desc: "", steps: "Every one has ended. You're still here. This one ends too." },
-      { type: "standard", title: "You Can Slow Down", desc: "", steps: "You're allowed to stop. To rest. Slow down." },
-      { type: "standard", title: "Soften Something", desc: "", steps: "Where's the tension? Jaw, shoulders? Soften it. Just a little." },
-      { type: "standard", title: "One Thing at a Time", desc: "", steps: "Just the next minute. That's it. You can do that." }
+      { type: "emdr", title: "Bilateral Eye Sweep", desc: "Follow the light with your eyes. Keep your head completely still. This helps your brain physically process stress.", steps: "" },
+      { type: "voice", title: "Dissolving Thoughts", desc: "Speak your overwhelmed thoughts out loud. Get them out of your head, onto the screen, and watch them dissolve.", steps: "" },
+      { type: "breathing", title: "Box Breathing", desc: "Follow the circle. Keep your eyes gently focused on it.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 4000 }, { action: "Breathe Out", time: 4000 }, { action: "Hold", time: 4000 }], steps: "" },
+      { type: "breathing", title: "4-7-8 Breath", desc: "Follow the circle. Keep your eyes gently focused on it.", pattern: [{ action: "Breathe In", time: 4000 }, { action: "Hold", time: 7000 }, { action: "Breathe Out", time: 8000 }], steps: "" },
+      { type: "standard", title: "Slow Exhale", desc: "Activate your body's rest response.", steps: "Breathe in normally.\nNow breathe out slowly — make it twice as long as the inhale.\n\nDo this 6 times.\nSlow exhales activate your body's rest response." },
+      { type: "standard", title: "5-4-3-2-1 Grounding", desc: "Scan your environment carefully.", steps: "Name 5 things you can see.\nName 4 things you can physically feel.\nName 3 things you can hear.\nName 2 things you can smell.\nName 1 thing you can taste.\n\nTake your time with each one." },
+      { type: "standard", title: "Feet on the Floor", desc: "Reconnect with gravity.", steps: "Press both feet flat on the floor.\nFeel the ground under you.\nNotice the texture, the temperature, the pressure.\n\nYou are here. You are supported.\nStay with this feeling for 30 seconds." },
+      { type: "standard", title: "Hold Something Cold", desc: "Focus entirely on a single sensation.", steps: "Find something cold — ice, a cold drink, cold water.\nHold it in your hands.\nFocus entirely on the sensation.\n\nThe cold brings you back to the present moment.\nStay with it until your breathing slows." },
+      { type: "standard", title: "Body Scan", desc: "Bring awareness back to your body.", steps: "Start at the top of your head.\nSlowly move your attention down through your body.\n\nNotice: forehead, jaw, shoulders, chest, stomach, hands, legs, feet.\n\nAt each part: notice the sensation. Don't try to change it." },
+      { type: "standard", title: "Name What You See", desc: "Engage the logical part of your brain.", steps: "Look around and silently name 10 objects you can see.\n\nBe specific: not 'chair' but 'wooden chair with blue cushion'.\n\nThis pulls your brain out of panic and into the present." },
+      { type: "standard", title: "Clench and Release", desc: "Release physical tension.", steps: "Make tight fists with both hands.\nHold for 5 seconds.\nRelease completely.\n\nNow tense your shoulders up to your ears.\nHold for 5 seconds.\nRelease.\n\nRepeat 3 times. Feel the difference." },
+      { type: "standard", title: "Splash Cold Water", desc: "Trigger the mammalian dive reflex.", steps: "Go to a sink.\nSplash cold water on your face — especially your forehead and cheeks.\n\nThis triggers the dive reflex and slows your heart rate.\nPat your face dry slowly." },
+      { type: "standard", title: "Run in Place", desc: "Burn off the adrenaline.", steps: "Run in place for 30 seconds.\nLet your body burn off the adrenaline.\n\nPanic primes your body to fight or flee.\nGive it somewhere to go.\n\nStop. Breathe. Notice how you feel." },
+      { type: "standard", title: "Shake It Out", desc: "Release nervous energy.", steps: "Stand up if you can.\nShake your hands like you're flicking water off them.\nThen shake your arms. Your legs. Your whole body.\n\n30 seconds of shaking.\nAnimals do this after stress. It works." },
+      { type: "standard", title: "This Will Pass", desc: "A reminder of impermanence.", steps: "A panic attack cannot last forever.\nYour body cannot sustain this level of arousal.\n\nThe average panic attack peaks in 10 minutes.\nYou have survived every single one before this.\n\nThis one will pass too." },
+      { type: "standard", title: "Panic Is Not Danger", desc: "Reframe the physical sensations.", steps: "Panic feels like danger. It is not danger.\n\nYour heart is beating fast: that's adrenaline, not a heart attack.\nYou feel lightheaded: that's shallow breathing, not dying.\n\nThe alarm is loud. The alarm is wrong.\nYou are safe." },
+      { type: "standard", title: "Name 3 True Facts", desc: "Anchor yourself with undeniable truths.", steps: "Say three things that are true right now.\n\nFor example:\n'I am sitting in my living room.'\n'It is Tuesday afternoon.'\n'I can hear cars outside.'\n\nFacts are an anchor. Use them." },
+      { type: "standard", title: "What Would You Tell a Friend?", desc: "Practice self-compassion.", steps: "If your best friend was feeling exactly what you're feeling right now, what would you say to them?\n\nSay it to yourself.\nOut loud if you can.\n\nYou deserve the same compassion you'd give them." },
+      { type: "standard", title: "You Have Done This Before", desc: "Draw on your past resilience.", steps: "Every panic attack you've ever had has ended.\n\nEvery single one.\n\nYou are still here.\nYou are stronger than this feeling.\n\nThis one ends too." },
+      { type: "standard", title: "You Are Allowed to Slow Down", desc: "Give yourself permission to pause.", steps: "You don't have to keep going right now.\n\nYou are allowed to stop.\nYou are allowed to rest.\nYou are allowed to take up space.\n\nSlow down.\nYou have permission." },
+      { type: "standard", title: "Soften Something", desc: "Release a tiny bit of resistance.", steps: "Notice where you're holding tension in your body.\nYour jaw? Your shoulders? Your hands?\n\nJust soften it slightly. You don't have to let go completely.\nJust a little softer.\n\nAnd breathe." },
+      { type: "standard", title: "One Thing at a Time", desc: "Narrow your focus to right now.", steps: "You don't have to solve everything right now.\n\nYou only have to do one thing:\nGet through the next minute.\n\nThat's it.\nJust the next minute.\nYou can do that." }
     ];
 
     // --- APP LOGIC ---
@@ -660,9 +658,7 @@
       cleanupCurrentTechnique();
 
       document.getElementById('technique-title').textContent = t.title;
-      const descEl = document.getElementById('technique-desc');
-      descEl.textContent = t.desc || '';
-      descEl.style.display = t.desc ? '' : 'none';
+      document.getElementById('technique-desc').textContent = t.desc;
       const card = document.getElementById('main-card');
       card.className = `technique-card mode-${t.type}`;
 
@@ -670,14 +666,9 @@
       else if (t.type === 'voice') initVoiceTechnique();
       else if (t.type === 'emdr') initEMDRTechnique();
       else {
-        const stepsContainer = document.getElementById('technique-steps');
-        stepsContainer.innerHTML = '';
-        if (t.steps && t.steps.trim()) {
-          const p = document.createElement('div');
-          p.className = 'step-text';
-          p.textContent = t.steps.trim();
-          stepsContainer.appendChild(p);
-        }
+        const stepsContainer = document.getElementById('technique-steps'); stepsContainer.innerHTML = '';
+        const lines = t.steps.split('\n').filter(l => l.trim() !== '');
+        lines.forEach((line, i) => { const p = document.createElement('div'); p.className = 'step-line'; p.textContent = line; p.style.animationDelay = `${i * 0.15 + 0.3}s`; stepsContainer.appendChild(p); });
       }
       switchView('view-technique');
     }
