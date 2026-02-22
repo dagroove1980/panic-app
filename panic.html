@@ -492,6 +492,192 @@
     .mode-emdr .steps {
       display: none;
     }
+
+    /* Mobile compactness */
+    @media (max-height: 700px) {
+      .technique-card {
+        padding: 1.25rem 1.25rem;
+      }
+
+      .technique-content h2 {
+        font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+        margin-bottom: 0.4rem;
+      }
+
+      .technique-content .view-desc {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+      }
+
+      .step-line {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+      }
+
+      .breath-container {
+        width: min(150px, 40vw);
+        height: min(150px, 40vw);
+      }
+
+      .breath-text {
+        font-size: 1.4rem;
+      }
+
+      .emdr-container {
+        height: 70px;
+        margin-bottom: 1rem;
+      }
+
+      .voice-output {
+        min-height: 80px;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .technique-card .actions {
+        margin-top: 0.75rem;
+        padding-top: 0.5rem;
+      }
+
+      .technique-ui {
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-height: 580px) {
+      .technique-card {
+        padding: 1rem 1rem;
+      }
+
+      .technique-content h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .technique-content .view-desc {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .step-line {
+        font-size: 0.8rem;
+        line-height: 1.4;
+        margin-bottom: 0.35rem;
+      }
+
+      .breath-container {
+        width: min(120px, 35vw);
+        height: min(120px, 35vw);
+      }
+
+      .breath-text {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Swipe navigation */
+    .swipe-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .swipe-hint {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-align: center;
+      margin-top: 0.5rem;
+      opacity: 0.6;
+    }
+
+    .nav-arrow {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-arrow:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .nav-arrow svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Swipe transition */
+    .technique-card.swipe-out-left {
+      animation: swipeOutLeft 0.3s ease forwards;
+    }
+
+    .technique-card.swipe-out-right {
+      animation: swipeOutRight 0.3s ease forwards;
+    }
+
+    .technique-card.swipe-in-left {
+      animation: swipeInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .technique-card.swipe-in-right {
+      animation: swipeInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes swipeOutLeft {
+      to {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+    }
+
+    @keyframes swipeOutRight {
+      to {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+    }
+
+    @keyframes swipeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes swipeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   </style>
 </head>
 
@@ -552,8 +738,16 @@
         </div>
 
         <div class="actions">
-          <button id="next-btn" class="btn-secondary">Try something else</button>
-          <button id="back-link" class="btn-link">I feel better (Start over)</button>
+          <div class="swipe-nav">
+            <button id="prev-btn" class="nav-arrow" aria-label="Previous technique">
+              <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button id="back-link" class="btn-link">I feel better</button>
+            <button id="next-btn" class="nav-arrow" aria-label="Next technique">
+              <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </button>
+          </div>
+          <p class="swipe-hint">swipe or tap arrows</p>
         </div>
       </div>
     </div>
@@ -650,17 +844,55 @@
 
     // --- APP LOGIC ---
     let deck = []; let index = 0;
+    let history = []; let historyIndex = -1;
     function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
     function nextTechnique() { if (index >= deck.length) { deck = shuffle(techniques); index = 0; } return deck[index++]; }
 
-    function showTechnique(t) {
+    function goNext() {
+      // If we're in the middle of history, go forward
+      if (historyIndex < history.length - 1) {
+        historyIndex++;
+        animateTransition('left', () => showTechniqueContent(history[historyIndex]));
+      } else {
+        const t = nextTechnique();
+        history.push(t);
+        historyIndex = history.length - 1;
+        animateTransition('left', () => showTechniqueContent(t));
+      }
+    }
+
+    function goPrev() {
+      if (historyIndex > 0) {
+        historyIndex--;
+        animateTransition('right', () => showTechniqueContent(history[historyIndex]));
+      }
+    }
+
+    function animateTransition(direction, callback) {
+      const card = document.getElementById('main-card');
+      const outClass = direction === 'left' ? 'swipe-out-left' : 'swipe-out-right';
+      const inClass = direction === 'left' ? 'swipe-in-left' : 'swipe-in-right';
+
+      card.classList.add(outClass);
+      setTimeout(() => {
+        card.classList.remove(outClass);
+        callback();
+        card.classList.add(inClass);
+        setTimeout(() => card.classList.remove(inClass), 400);
+      }, 250);
+    }
+
+    function showTechniqueContent(t) {
       targetChaosLevel = Math.max(0.1, targetChaosLevel - 0.25);
       cleanupCurrentTechnique();
 
       document.getElementById('technique-title').textContent = t.title;
       document.getElementById('technique-desc').textContent = t.desc;
       const card = document.getElementById('main-card');
+      // Preserve any swipe animation classes
+      const swipeClasses = [...card.classList].filter(c => c.startsWith('swipe-'));
       card.className = `technique-card mode-${t.type}`;
+      swipeClasses.forEach(c => card.classList.add(c));
 
       if (t.type === 'breathing') setTimeout(() => runBreathingCycle(t.pattern), 600);
       else if (t.type === 'voice') initVoiceTechnique();
@@ -672,6 +904,37 @@
       }
       switchView('view-technique');
     }
+
+    // First technique (no animation)
+    function showTechnique(t) {
+      history = [t];
+      historyIndex = 0;
+      showTechniqueContent(t);
+    }
+
+    // --- SWIPE GESTURE ---
+    (function initSwipe() {
+      const card = document.getElementById('main-card');
+      let startX = 0, startY = 0, tracking = false;
+
+      card.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        tracking = true;
+      }, { passive: true });
+
+      card.addEventListener('touchend', (e) => {
+        if (!tracking) return;
+        tracking = false;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        // Only count horizontal swipes (more horizontal than vertical, and at least 50px)
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) goNext();
+          else goPrev();
+        }
+      }, { passive: true });
+    })();
 
     function cleanupCurrentTechnique() { stopBreathingAnimation(); stopVoiceRecognition(); stopEMDR(); }
     function switchView(viewId) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById(viewId).classList.add('active'); }
@@ -751,8 +1014,9 @@
     }
 
     document.getElementById('start-btn').addEventListener('click', () => { showTechnique(nextTechnique()); });
-    document.getElementById('next-btn').addEventListener('click', () => { showTechnique(nextTechnique()); });
-    document.getElementById('back-link').addEventListener('click', (e) => { e.preventDefault(); switchView('view-landing'); });
+    document.getElementById('next-btn').addEventListener('click', () => { goNext(); });
+    document.getElementById('prev-btn').addEventListener('click', () => { goPrev(); });
+    document.getElementById('back-link').addEventListener('click', (e) => { e.preventDefault(); cleanupCurrentTechnique(); switchView('view-landing'); });
   </script>
 </body>
 
